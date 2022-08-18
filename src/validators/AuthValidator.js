@@ -15,17 +15,11 @@ module.exports = {
       errorMessage: 'E-mail inválido'
     },
     password: {
-      isStrongPassword: {
-        options: {
-          minLength: 5,
-          minUppercase: 1,
-          minLowercase: 1,
-          minNumbers: 1,
-          minSymbols: 1
-        }
+      optional: true,
+      isLength: {
+        options: { min: 3 }
       },
-      errorMessage:
-        'Senha deve ter pelo menos 5 caracteres (maiúsculas, minúsculas, números e caracteres especiais).'
+      errorMessage: 'Senha deve ter pelo menos 3 caracteres.'
     },
     state: {
       notEmpty: true,
