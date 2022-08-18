@@ -172,6 +172,7 @@ module.exports = {
         title: adsData[i].title,
         price: adsData[i].price,
         priceNegotiable: adsData[i].priceNegotiable,
+        dateCreated: adsData[i].dateCreated,
         image
       })
     }
@@ -224,6 +225,7 @@ module.exports = {
             title: otherData[i].title,
             price: otherData[i].price,
             priceNegotiable: otherData[i].priceNegotiable,
+            dateCreated: otherData[i].dateCreated,
             image
           })
         }
@@ -236,7 +238,7 @@ module.exports = {
       price: ad.price,
       priceNegotiable: ad.priceNegotiable,
       description: ad.description,
-      dataCreated: ad.dateCreated,
+      dateCreated: ad.dateCreated,
       views: ad.views,
       images,
       category,
