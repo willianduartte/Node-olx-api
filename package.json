@@ -23,5 +23,6 @@
     "jimp": "^0.16.1",
     "mongoose": "^6.5.1",
     "uuid": "^8.3.2"
-  }
+  },
+  "resolutions": { "fs-capacitor": "3.0.0" }
 }
