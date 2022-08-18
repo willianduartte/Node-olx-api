@@ -44,7 +44,6 @@ module.exports = {
     if (data.name) {
       updates.name = data.name
     }
-
     if (data.email) {
       const emailCheck = await User.findOne({ email: data.email })
       if (emailCheck) {
