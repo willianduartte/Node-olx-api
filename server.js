@@ -5,7 +5,7 @@ const cors = require('cors')
 const path = require('path')
 require('dotenv').config()
 
-const apiRoutes = require('./routes/routes')
+const apiRoutes = require('./src/routes/routes')
 
 mongoose.connect(process.env.DATABASE, async err => {
   if (err) throw err.message
