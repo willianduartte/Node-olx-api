@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const { v4: uuid } = require('uuid')
 const jimp = require('jimp')
 const fs = require('fs')
+const aws = require('aws-sdk')
 
 const Category = require('../models/Category')
 const StateModel = require('../models/State')
@@ -89,27 +90,98 @@ module.exports = {
 
     if (req.files && req.files.img) {
       if (req.files.img.length == undefined) {
+        let url = await addImage(req.files.img.data)
+
+        const s3 = new aws.S3({
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.AWS_SECRET_ACCSESS_KEY,
+          region: process.env.AWS_DEFAULT_REGION
+        })
+
+        const file = await jimp
+          .read(Buffer.from(req.files.img.data, 'base64'))
+          .then(async image => {
+            image.cover(500, 500).quality(80)
+            return image.getBufferAsync(jimp.AUTO)
+          })
+
+        const params = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: url,
+          Body: file,
+          ContentType: req.files.img.mimetype,
+          acl: 'public-read'
+        }
+
+        s3.upload(params, async (err, data) => {
+          try {
+            if (err) {
+              res.status(500).json({ error: true, Message: 'Deu erro ' + err })
+            }
+          } catch (err) {
+            res.status(500).json({ msg: 'Server Error', error: err })
+          }
+        })
+
         if (
           ['image/jpeg', 'image/jpg', 'image/png'].includes(
             req.files.img.mimetype
           )
         ) {
-          let url = await addImage(req.files.img.data)
+          let awsUrl = process.env.AWS_Uploaded_File_URL_LINK + url
+
           newAd.images.push({
-            url,
+            awsUrl,
             default: false
           })
         }
       } else {
         for (let i = 0; i < req.files.img.length; i++) {
+          let url = await addImage(req.files.img[i].data)
+
+          const s3 = new aws.S3({
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.AWS_SECRET_ACCSESS_KEY,
+            region: process.env.AWS_DEFAULT_REGION
+          })
+
+          const file = await jimp
+            .read(Buffer.from(req.files.img[i].data, 'base64'))
+            .then(async image => {
+              image.cover(500, 500).quality(80)
+
+              return image.getBufferAsync(jimp.AUTO)
+            })
+
+          const params = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: url,
+            Body: file,
+            ContentType: req.files.img[i].mimetype,
+            acl: 'public-read'
+          }
+
+          s3.upload(params, async (err, data) => {
+            try {
+              if (err) {
+                res
+                  .status(500)
+                  .json({ error: true, Message: 'Deu erro ' + err })
+              }
+            } catch (err) {
+              res.status(500).json({ msg: 'Server Error', error: err })
+            }
+          })
+
           if (
             ['image/jpeg', 'image/jpg', 'image/png'].includes(
               req.files.img[i].mimetype
             )
           ) {
-            let url = await addImage(req.files.img[i].data)
+            let awsUrl = process.env.AWS_Uploaded_File_URL_LINK + url
+
             newAd.images.push({
-              url,
+              awsUrl,
               default: false
             })
           }
@@ -304,27 +376,98 @@ module.exports = {
 
     if (req.files && req.files.img) {
       if (req.files.img.length == undefined) {
+        let url = await addImage(req.files.img.data)
+
+        const s3 = new aws.S3({
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.AWS_SECRET_ACCSESS_KEY,
+          region: process.env.AWS_DEFAULT_REGION
+        })
+
+        const file = await jimp
+          .read(Buffer.from(req.files.img.data, 'base64'))
+          .then(async image => {
+            image.cover(500, 500).quality(80)
+            return image.getBufferAsync(jimp.AUTO)
+          })
+
+        const params = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: url,
+          Body: file,
+          ContentType: req.files.img.mimetype,
+          acl: 'public-read'
+        }
+
+        s3.upload(params, async (err, data) => {
+          try {
+            if (err) {
+              res.status(500).json({ error: true, Message: 'Deu erro ' + err })
+            }
+          } catch (err) {
+            res.status(500).json({ msg: 'Server Error', error: err })
+          }
+        })
+
         if (
           ['image/jpeg', 'image/jpg', 'image/png'].includes(
             req.files.img.mimetype
           )
         ) {
-          let url = await addImage(req.files.img.data)
+          let awsUrl = process.env.AWS_Uploaded_File_URL_LINK + url
+
           images.push({
-            url,
+            awsUrl,
             default: false
           })
         }
       } else {
         for (let i = 0; i < req.files.img.length; i++) {
+          let url = await addImage(req.files.img[i].data)
+
+          const s3 = new aws.S3({
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.AWS_SECRET_ACCSESS_KEY,
+            region: process.env.AWS_DEFAULT_REGION
+          })
+
+          const file = await jimp
+            .read(Buffer.from(req.files.img[i].data, 'base64'))
+            .then(async image => {
+              image.cover(500, 500).quality(80)
+
+              return image.getBufferAsync(jimp.AUTO)
+            })
+
+          const params = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: url,
+            Body: file,
+            ContentType: req.files.img[i].mimetype,
+            acl: 'public-read'
+          }
+
+          s3.upload(params, async (err, data) => {
+            try {
+              if (err) {
+                res
+                  .status(500)
+                  .json({ error: true, Message: 'Deu erro ' + err })
+              }
+            } catch (err) {
+              res.status(500).json({ msg: 'Server Error', error: err })
+            }
+          })
+
           if (
             ['image/jpeg', 'image/jpg', 'image/png'].includes(
               req.files.img[i].mimetype
             )
           ) {
-            let url = await addImage(req.files.img[i].data)
+            let awsUrl = process.env.AWS_Uploaded_File_URL_LINK + url
+
             images.push({
-              url,
+              awsUrl,
               default: false
             })
           }
@@ -334,7 +477,7 @@ module.exports = {
 
     if (images.length > 0) {
       images[0].default = true
-      delImage(ad)
+      delImage(id)
       updates.images = images
     }
 
