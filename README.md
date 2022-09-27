@@ -1,3 +1,3 @@
-# Node-olx-api
+# Node-OLX-api
 
-Api do projeto OLX que pode ser encontrado aqui: https://github.com/willianduartte/React-OLX-Clone
+Api do projeto OLX que pode ser encontrado aqui https://github.com/willianduartte/React-OLX-Clone
