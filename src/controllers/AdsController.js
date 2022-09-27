@@ -234,9 +234,9 @@ module.exports = {
 
       let defaultImg = adsData[i].images.find(e => e.default)
       if (defaultImg) {
-        image = `${process.env.BASE}/media/${defaultImg.url}`
+        image = `${process.env.AWS_Uploaded_File_URL_LINK}${defaultImg.url}`
       } else {
-        image = `${process.env.BASE}/media/default.jpg`
+        image = `${process.env.AWS_Uploaded_File_URL_LINK}default.jpg`
       }
 
       ads.push({
