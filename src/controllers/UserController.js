@@ -41,10 +41,10 @@ module.exports = {
 
     let updates = {}
 
-    if (data.name) {
+    if (data.name != '') {
       updates.name = data.name
     }
-    if (data.email) {
+    if (data.email != '') {
       const emailCheck = await User.findOne({ email: data.email })
       if (emailCheck) {
         res.json({ error: 'E-mail já existente!' })
@@ -53,7 +53,7 @@ module.exports = {
       updates.email = data.email
     }
 
-    if (data.state) {
+    if (data.state != '') {
       if (mongoose.Types.ObjectId.isValid(data.state)) {
         const stateCheck = await State.findById(data.state)
         if (!stateCheck) {
@@ -67,7 +67,7 @@ module.exports = {
       }
     }
 
-    if (data.password) {
+    if (data.password != '') {
       updates.passwordHash = await bcrypt.hash(data.password, 10)
     }
 
