@@ -271,7 +271,7 @@ module.exports = {
 
     let images = []
     for (let i in ad.images) {
-      images.push(`${process.env.BASE}/media/${ad.images[i].url}`)
+      images.push(`${ad.images[i].awsUrl}`)
     }
 
     let category = await Category.findById(ad.category)
@@ -285,11 +285,11 @@ module.exports = {
 
       for (let i in otherData) {
         if (otherData[i]._id.toString() != ad._id.toString()) {
-          let image = `${process.env.BASE}/media/default.jpg`
+          let image = `${process.env.AWS_Uploaded_File_URL_LINK}default.jpg`
 
           let defaultImg = otherData[i].images.find(e => e.default)
           if (defaultImg) {
-            image = `${process.env.BASE}/media/${defaultImg.url}`
+            image = `${process.env.AWS_Uploaded_File_URL_LINK}${defaultImg.awsUrl}`
           }
 
           others.push({
