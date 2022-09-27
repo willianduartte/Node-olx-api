@@ -289,7 +289,7 @@ module.exports = {
 
           let defaultImg = otherData[i].images.find(e => e.default)
           if (defaultImg) {
-            image = `${process.env.AWS_Uploaded_File_URL_LINK}${defaultImg.awsUrl}`
+            image = `${defaultImg.awsUrl}`
           }
 
           others.push({
